@@ -1,7 +1,5 @@
 'use strict'
 
-// TODO disable/enable get/set
-
 var React = require('react-native')
 
 var {
@@ -17,8 +15,8 @@ var {
 var Calendar = React.createClass({
     getInitialState: function () {
         return {
-            val: 0,
-            activeOpacity: 1
+            value: 0,
+            activeOpacity: 1,
         }
     },
     add: function () {
@@ -28,17 +26,26 @@ var Calendar = React.createClass({
         opearte.call(this, -1)
     },
     render: function () {
-        var st = this.state,
-            pr = this.props
+        var props = this.props
+
+        this.state.value = this.props.value
 
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={[styles.btn, styles.btnSub]} onPress={this.sub} activeOpacity={pr.enabled ? 0.5 : 1}>
-                    <Text style={styles.btnText}>-</Text>
+                <TouchableOpacity
+                    style={[styles.btn, styles.btnSub]}
+                    onPress={this.sub}
+                    activeOpacity={props.enabled ? 0.5 : 1}>
+                    <Text style={[styles.btnText, props.enabled ? {} : styles.btnTextDisabled]}>-</Text>
                 </TouchableOpacity>
-                <Text style={styles.content}>{this.state.val}</Text>
-                <TouchableOpacity style={[styles.btn, styles.btnAdd]} onPress={this.add} activeOpacity={pr.enabled ? 0.5 : 1}>
-                    <Text style={styles.btnText}>+</Text>
+                <Text style={styles.content}>
+                    {this.state.value}
+                </Text>
+                <TouchableOpacity
+                    style={[styles.btn, styles.btnAdd]}
+                    onPress={this.add}
+                    activeOpacity={props.enabled ? 0.5 : 1}>
+                    <Text style={[styles.btnText, props.enabled ? {} : styles.btnTextDisabled]}>+</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -49,10 +56,18 @@ function opearte(direction){
     this.setState(function(previousState, currentProps) {
         if(currentProps.enabled){
             var step = parseFloat(currentProps.step),
-                maxStepDigit = 10
+                value = parseFloat(previousState.value),
+                maxStepDigit = 10,
+                result
 
+            // calculate
             step = isNaN(step) ? 1 : step
-            return {val: parseFloat((previousState.val + step * direction).toPrecision(maxStepDigit))}
+            result = parseFloat((value + step * direction).toPrecision(maxStepDigit))
+
+            // trigger onChange
+            this.props.onChange ? this.props.onChange(result) : null
+
+            return {value: result}
         }
     })
 }
@@ -71,7 +86,7 @@ var styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        color: "#00AFC7",
+        color: "#00afc7",
         textAlign: 'center',
     },
     btn: {
@@ -81,15 +96,18 @@ var styles = StyleSheet.create({
         borderColor: '#ddd',
     },
     btnText: {
-        color: "#00AFC7",
+        color: "#00afc7",
         textAlign: 'center',
+    },
+    btnTextDisabled: {
+        color: "#aaa",
     },
     btnAdd: {
         borderLeftWidth: 1,
     },
     btnSub: {
         borderRightWidth: 1,
-    }
+    },
 })
 
 module.exports = Calendar
