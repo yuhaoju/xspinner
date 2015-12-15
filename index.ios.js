@@ -15,7 +15,7 @@ var {
 var xspinner = React.createClass({
     getInitialState: function () {
         return {
-            step: '1',
+            step: '2',
             enabled: true,
             spinnerVal: '5',
             settedSpinnerVal: '5'

@@ -2,21 +2,18 @@
 
 var React = require('react-native')
 
-var {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    PixelRatio,
-    ScrollView,
-    TouchableOpacity,
-    } = React
+var {StyleSheet, Text, View, TouchableOpacity,} = React
 
 var Calendar = React.createClass({
     getInitialState: function () {
         return {
-            value: 0,
+            value: this.props.value ? this.props.value : 0,
             activeOpacity: 1,
+        }
+    },
+    getDefaultProps: function () {
+        return {
+            step: 1,
         }
     },
     add: function () {
@@ -26,9 +23,8 @@ var Calendar = React.createClass({
         opearte.call(this, -1)
     },
     render: function () {
-        var props = this.props
-
-        this.state.value = this.props.value
+        var props = this.props,
+            value = this.state.value = this.props.value ? this.props.value : this.state.value
 
         return (
             <View style={styles.container}>
@@ -39,7 +35,7 @@ var Calendar = React.createClass({
                     <Text style={[styles.btnText, props.enabled ? {} : styles.btnTextDisabled]}>-</Text>
                 </TouchableOpacity>
                 <Text style={styles.content}>
-                    {this.state.value}
+                {value}
                 </Text>
                 <TouchableOpacity
                     style={[styles.btn, styles.btnAdd]}
@@ -52,9 +48,9 @@ var Calendar = React.createClass({
     }
 })
 
-function opearte(direction){
-    this.setState(function(previousState, currentProps) {
-        if(currentProps.enabled){
+function opearte(direction) {
+    this.setState(function (previousState, currentProps) {
+        if (currentProps.enabled) {
             var step = parseFloat(currentProps.step),
                 value = parseFloat(previousState.value),
                 maxStepDigit = 10,
