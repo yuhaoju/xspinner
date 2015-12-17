@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var Spinner = require('./xspinner');
+var Spinner = require('react-native-spinner');
 
 var {
     View,
