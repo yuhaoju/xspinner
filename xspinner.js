@@ -31,8 +31,8 @@ var Calendar = React.createClass({
                 <TouchableOpacity
                     style={[styles.btn, styles.btnSub]}
                     onPress={this.sub}
-                    activeOpacity={props.enabled ? 0.5 : 1}>
-                    <Text style={[styles.btnText, props.enabled ? {} : styles.btnTextDisabled]}>-</Text>
+                    activeOpacity={props.disabled ? 1 : 0.5}>
+                    <Text style={[styles.btnText, props.disabled ? styles.btnTextDisabled : {}]}>-</Text>
                 </TouchableOpacity>
                 <Text style={styles.content}>
                 {value}
@@ -40,8 +40,8 @@ var Calendar = React.createClass({
                 <TouchableOpacity
                     style={[styles.btn, styles.btnAdd]}
                     onPress={this.add}
-                    activeOpacity={props.enabled ? 0.5 : 1}>
-                    <Text style={[styles.btnText, props.enabled ? {} : styles.btnTextDisabled]}>+</Text>
+                    activeOpacity={props.disabled ? 1 : 0.5}>
+                    <Text style={[styles.btnText, props.disabled ? styles.btnTextDisabled : {}]}>+</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -50,7 +50,7 @@ var Calendar = React.createClass({
 
 function opearte(direction) {
     this.setState(function (previousState, currentProps) {
-        if (currentProps.enabled) {
+        if (!currentProps.disabled) {
             var step = parseFloat(currentProps.step),
                 value = parseFloat(previousState.value),
                 maxStepDigit = 10,

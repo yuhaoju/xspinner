@@ -16,7 +16,7 @@ var xspinner = React.createClass({
     getInitialState: function () {
         return {
             step: '2',
-            enabled: true,
+            disabled: false,
             spinnerVal: '5',
             settedSpinnerVal: '5'
         }
@@ -30,7 +30,7 @@ var xspinner = React.createClass({
                 <Spinner
                     value={this.state.spinnerVal}
                     step={this.state.step}
-                    enabled={this.state.enabled}
+                    disabled={this.state.disabled}
                     onChange={this.getSpinnerValue}
                 />
 
@@ -60,11 +60,11 @@ var xspinner = React.createClass({
                 </View>
 
                 <View style={styles.operation}>
-                    <Text>设置enabled</Text>
+                    <Text>设置disabled</Text>
                     <SwitchIOS
                         style={styles.opeComponent}
-                        onValueChange={(value) => this.setState({enabled: value})}
-                        value={this.state.enabled} />
+                        onValueChange={(value) => this.setState({disabled: value})}
+                        value={this.state.disabled} />
                 </View>
             </View>
         );
