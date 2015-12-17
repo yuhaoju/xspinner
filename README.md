@@ -1,5 +1,5 @@
 #xspinner
 
-react-native ui demo
+react-native数字选择组件示例
 
 ![alt tag](https://raw.githubusercontent.com/roscoe054/xspinner/master/demo.gif)
